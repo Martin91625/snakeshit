@@ -1,20 +1,21 @@
 package com.example.map;
 
+import com.example.App;
+
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.Pane;
 
 public class mapController {
 
     @FXML
-    private Pane gameRoot;
-    
-    @FXML
     private Canvas canvas;
 
+    private Scene gameRoot = App._scene;
+    
     @FXML
     void initialize(){
         MapRenderer map = new MapRenderer(canvas);
-        map.startGameLoop();
+        map.startGameLoop(gameRoot);
     }
 }

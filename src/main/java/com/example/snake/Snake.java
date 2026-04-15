@@ -7,7 +7,7 @@ public class Snake {
     // ArrayList<>
     // int length = 5;
     Color color = Color.GREEN;
-    String direction = "RIGHT";
+    String direction = "DOWN";
     double[] pos = {0, 0};
 
     public Snake() {}
@@ -37,8 +37,8 @@ public class Snake {
         return pos;
     }
 
-    public void setPos(double posx, double posy) {
-        this.pos[0] = posx;
-        this.pos[1] = posy;
+    public void setPos(double[] pos) {
+        this.pos[0] = pos[0];
+        this.pos[1] = pos[1];
     }
 }

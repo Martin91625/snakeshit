@@ -1,8 +1,10 @@
 package com.example.map;
 
 import com.example.snake.Snake;
+import com.example.snake.SnakeControl;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -10,8 +12,10 @@ import javafx.scene.paint.Color;
 public class MapRenderer extends Map{
 
     Snake snake = new Snake();
+    SnakeControl snakeControl = new SnakeControl();
     GraphicsContext gc;
     AnimationTimer animationTimer;
+    double deltaTime;
 
     public MapRenderer(Canvas canvas) {
         super(canvas);
@@ -26,18 +30,10 @@ public class MapRenderer extends Map{
         gc.fillRect(snake.getPos()[0], snake.getPos()[1], squareSize, squareSize);
     }
 
-    private void update(double dt) {
+    private void update() {
         //System.out.println("updating");
-        double[] pos = snake.getPos();
-        String dir = snake.getDirection();
-        
-        switch (dir) {
-            case "RIGHT" -> snake.setPos(pos[0] + gameSpeed * dt, pos[1]);
-            case "LEFT" -> snake.setPos(pos[0] - gameSpeed * dt, pos[1]);
-            case "UP" -> snake.setPos(pos[0], pos[1] - gameSpeed * dt);
-            case "DOWN" -> snake.setPos(pos[0], pos[1] + gameSpeed * dt);
-            default -> throw new AssertionError();
-        }
+        double[] pos = snakeControl.moveSnake(deltaTime);     
+        snake.setPos(pos);
     }
 
     private void clearScreen() {
@@ -59,13 +55,14 @@ public class MapRenderer extends Map{
                 deltaTime = (now - lastTime) / 1_000_000_000.0;
                 lastTime = now;
 
-                update(deltaTime);
+                update();
                 render(gc);
             }
         };
     }
-    public void startGameLoop() {
+    public void startGameLoop(Scene gameRoot) {
         initGameLoop(gc);
+        snakeControl.initChangeDirListener(gameRoot);
         animationTimer.start();
     }
     public void stopGameLoop() {
