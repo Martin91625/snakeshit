@@ -11,10 +11,10 @@ public class mapController {
     @FXML
     private Canvas canvas;
 
-    private Scene gameRoot = App._scene;
+    private final Scene gameRoot = App._scene;
     
     @FXML
-    void initialize(){
+    public void initialize(){
         MapRenderer map = new MapRenderer(canvas);
         map.startGameLoop(gameRoot);
     }

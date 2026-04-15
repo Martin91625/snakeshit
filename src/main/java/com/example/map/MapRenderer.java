@@ -33,7 +33,7 @@ public class MapRenderer extends Map{
     private void update() {
         //System.out.println("updating");
         double[] pos = snakeControl.moveSnake(deltaTime);     
-        snake.setPos(pos);
+        snake.setPos(pos);        
     }
 
     private void clearScreen() {

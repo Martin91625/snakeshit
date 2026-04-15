@@ -25,7 +25,7 @@ public class App extends Application {
         try {
             trySetRoot(fxml);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.err.println("\nHiba az fxml fájl betöltése közben");
 
         }

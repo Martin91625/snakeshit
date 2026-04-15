@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Map {
     
-    int gameSpeed = 60;
+    int gameSpeed = 1000;
     int height = 20; // grid tiles
     int width = 20;
     int squareSize = 30; // pixels

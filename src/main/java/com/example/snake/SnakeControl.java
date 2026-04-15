@@ -5,8 +5,9 @@ import java.util.InputMismatchException;
 import com.example.map.Map;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 
-public class SnakeControl extends Snake{
+public class SnakeControl {
     
     Map map = new Map();
     int squareSize = map.getSquareSize();
@@ -45,12 +46,17 @@ public class SnakeControl extends Snake{
 
     public void initChangeDirListener(Scene gameRoot) {
         gameRoot.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case W -> snake.setDirection("UP");
-                case S -> snake.setDirection("DOWN");
-                case D -> snake.setDirection("RIGHT");
-                case A -> snake.setDirection("LEFT");
-            }
+            String current = snake.getDirection();
+            KeyCode code = e.getCode();
+            if (code == KeyCode.W && !current.equals("DOWN"))
+                snake.setDirection("UP");
+            else if (code == KeyCode.S && !current.equals("UP"))
+                snake.setDirection("DOWN");
+            else if (code == KeyCode.A && !current.equals("RIGHT"))
+                snake.setDirection("LEFT");
+            else if (code == KeyCode.D && !current.equals("LEFT"))
+                snake.setDirection("RIGHT");
         });
     }
 }
+

@@ -5,9 +5,17 @@ import javafx.fxml.FXML;
 
 public class mainMenuController {
 
+    /* @FXML
+    private Button playButton;
+
+    void initialize() {
+        playButton.setOnMouseClicked(e -> {
+            App.setRoot("map");
+        });
+     }*/
     @FXML
-    void onClickPlayButton(ActionEvent event) {
+    public void onClickPlayButton(ActionEvent event) {
         App.setRoot("map");
-    }
+    } 
 
 }
