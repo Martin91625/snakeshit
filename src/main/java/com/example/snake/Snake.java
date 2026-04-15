@@ -41,8 +41,4 @@ public class Snake {
         this.pos[0] = posx;
         this.pos[1] = posy;
     }
-
-    
-
-    
 }
