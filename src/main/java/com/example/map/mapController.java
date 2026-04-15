@@ -1,6 +1,4 @@
-package com.example;
-
-import com.example.map.Map;
+package com.example.map;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -16,7 +14,7 @@ public class mapController {
 
     @FXML
     void initialize(){
-        Map map = new Map(canvas);
+        MapRenderer map = new MapRenderer(canvas);
         map.startGameLoop();
     }
 }
