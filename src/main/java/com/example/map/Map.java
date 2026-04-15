@@ -1,60 +1,79 @@
 package com.example.map;
 
-import com.example.App;
+import com.example.snake.Snake;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class Map {
     
-    static int height = 20; // understood in grid tiles
-    static int width = 20;
-    static int squareSize = 30; // pixels
+    int gameSpeed = 1;
+    int height = 20; // understood in grid tiles
+    int width = 20;
+    int squareSize = 30; // pixels
+    Snake snake = new Snake();
 
-    static Canvas canvas = new Canvas(height*squareSize, width*squareSize);
-    static GraphicsContext gc = canvas.getGraphicsContext2D();
+    private Canvas canvas;
+    private GraphicsContext gc;
+    private AnimationTimer animationTimer;
+
+    public Map(Canvas canvas) {
+        this.canvas = canvas;
+        this.gc = canvas.getGraphicsContext2D();
+    }
     
-    private static void render() {
-        StackPane root = new StackPane(canvas);
-        Scene scene = new Scene(root);
-        App._stage.setScene(scene);
-        App._stage.show();
+    private void render(GraphicsContext gc) {
+        //System.out.println("rendering");
+        clearScreen();
+        gc.setFill(Color.WHITE);
+        gc.fillRect(snake.getPos()[0], snake.getPos()[1], squareSize, squareSize);
     }
-    private static int[] update(double dt, int[] pos) {    
-        pos[0] += 1 * dt;    
-        gc.fillRect(pos[0], pos[1], squareSize, squareSize);
-        pos[0] += squareSize;
-        //pos[1] += squareSize;
-        return pos;
+
+    private void update(double dt) {
+        //System.out.println("updating");
+        double[] pos = snake.getPos();
+        String dir = snake.getDirection();
+        
+        switch (dir) {
+            case "RIGHT" -> snake.setPos(pos[0] + gameSpeed * dt, pos[1]);
+            case "LEFT" -> snake.setPos(pos[0] - gameSpeed * dt, pos[1]);
+            case "UP" -> snake.setPos(pos[0], pos[1] - gameSpeed * dt);
+            case "DOWN" -> snake.setPos(pos[0], pos[1] + gameSpeed * dt);
+            default -> throw new AssertionError();
+        }
     }
-    public static void drawTest() {
-        int[] pos = {0, 0};
-        Paint paint = Color.BLACK;
-        gc.setFill(paint);
-        AnimationTimer animate = new AnimationTimer(){
-           private long lastTime = 0;
+
+    private void clearScreen() {
+        //System.out.println("clearing screen");
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0,height*squareSize, width*squareSize);
+    }
+
+    private void initGameLoop(GraphicsContext gc) {
+        animationTimer = new AnimationTimer() {
+            long lastTime = 0;
+
             @Override
-            public void handle(long now) {
-                do {
-                    if (lastTime == 0) {
+            public void handle(long now){
+                if (lastTime == 0) {
                     lastTime = now;
                     return;
-                    }
-                    double deltaSeconds = (now - lastTime) / 1_000_000_000.0;
-                    lastTime = now;             
-                    int[] newPos = update(deltaSeconds, pos);
-                    pos[0] = newPos[0];
-                    pos[1] = newPos[1];
-                    render();
-                } while (pos[0] < 600);
-                
+                }
+                double deltaTime = (now - lastTime) / 1_000_000_000.0;
+                lastTime = now;
+
+                update(deltaTime);
+                render(gc);
             }
         };
-        animate.start();
+    }
+    public void startGameLoop() {
+        initGameLoop(gc);
+        animationTimer.start();
+    }
+    public void stopGameLoop() {
+        animationTimer.stop();
     }
 }
