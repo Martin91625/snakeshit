@@ -16,7 +16,6 @@ public class mapController {
 
     @FXML
     void initialize(){
-        gameRoot.getChildren().add(canvas);
         Map map = new Map(canvas);
         map.startGameLoop();
     }

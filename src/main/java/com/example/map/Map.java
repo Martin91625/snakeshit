@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 public class Map {
     
-    int gameSpeed = 1;
+    int gameSpeed = 30;
     int height = 20; // understood in grid tiles
     int width = 20;
     int squareSize = 30; // pixels
