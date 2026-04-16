@@ -15,7 +15,7 @@ public class mapController {
     
     @FXML
     public void initialize(){
-        MapRenderer map = new MapRenderer(canvas);
-        map.startGameLoop(gameRoot);
+        final MapRenderer map = new MapRenderer(canvas);
+        map.snakeControl.initChangeDirListener(gameRoot);
     }
 }

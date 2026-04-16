@@ -4,7 +4,6 @@ import com.example.snake.Snake;
 import com.example.snake.SnakeControl;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -13,36 +12,35 @@ public class MapRenderer extends Map{
 
     final Snake snake = new Snake();
     SnakeControl snakeControl = new SnakeControl(snake);
-    GraphicsContext gc;
+    
     AnimationTimer animationTimer;
     double deltaTime;
     private double accumulator = 0;
-    private final double timeDiff = 0.5;
+    private final double timeDiff = 0.5; // seconds
 
     public MapRenderer(Canvas canvas) {
         super(canvas);
-        gc = super.getGc();
-        animationTimer = super.getAnimationTimer();
+        this.startGameLoop();
     }
 
     private void render(GraphicsContext gc) {
         //System.out.println("rendering");
         clearScreen();
-        gc.setFill(Color.WHITE);
-        gc.fillRect(snake.getPos()[0], snake.getPos()[1], squareSize, squareSize);
+        gc.setFill(snake.getColor());
+        gc.fillRect(snake.getPosition()[0], snake.getPosition()[1], squareSize, squareSize);
     }
 
     private void update() {
         //System.out.println("updating");
         snake.applyNextDirection();
-        int[] pos = snakeControl.moveSnake();     
-        snake.setPos(pos);        
+        int[] pos = snakeControl.moveSnake(width * squareSize, height * squareSize, squareSize);     
+        snake.setPosition(pos);        
     }
 
     private void clearScreen() {
         //System.out.println("clearing screen");
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0,height*squareSize, width*squareSize);
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillRect(0, 0,height*squareSize, width*squareSize);
     }
 
     private void initGameLoop(GraphicsContext gc) {
@@ -69,12 +67,11 @@ public class MapRenderer extends Map{
             }
         };
     }
-    public void startGameLoop(Scene gameRoot) {
-        initGameLoop(gc);
-        snakeControl.initChangeDirListener(gameRoot);
+    public final void startGameLoop() {
+        initGameLoop(graphicsContext);
         animationTimer.start();
     }
-    public void stopGameLoop() {
+    public final void stopGameLoop() {
         animationTimer.stop();
     }
 

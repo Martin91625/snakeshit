@@ -1,73 +1,61 @@
 package com.example.map;
 
-import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Map {
     
-    static int height = 20; // grid tiles
-    static int width = 20;
-    static int squareSize = 30; // pixels
+    protected int height = 20; // grid tiles
+    protected int width = 20;
+    protected int squareSize = 30; // pixels
 
-    private Canvas canvas;
-    private GraphicsContext gc;
-    private AnimationTimer animationTimer;
+    protected Canvas mapCanvas;
+    protected GraphicsContext graphicsContext;
 
     public Map(){}
 
     public Map(Canvas canvas) {
-        this.canvas = canvas;
-        this.gc = canvas.getGraphicsContext2D();
+        this.mapCanvas = canvas;
+        this.graphicsContext = canvas.getGraphicsContext2D();
     }
 
-    public static int getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public static void setHeight(int height) {
-        Map.height = height;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public static int getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public static void setWidth(int width) {
-        Map.width = width;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public static int getSquareSize() {
+    public int getSquareSize() {
         return squareSize;
     }
 
-    public static void setSquareSize(int squareSize) {
-        Map.squareSize = squareSize;
+    public void setSquareSize(int squareSize) {
+        this.squareSize = squareSize;
     }
 
-    public Canvas getCanvas() {
-        return canvas;
+    public Canvas getMapCanvas() {
+        return mapCanvas;
     }
 
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
+    public void setMapCanvas(Canvas canvas) {
+        this.mapCanvas = canvas;
     }
 
-    public GraphicsContext getGc() {
-        return gc;
+    public GraphicsContext getGraphicsContext() {
+        return graphicsContext;
     }
 
-    public void setGc(GraphicsContext gc) {
-        this.gc = gc;
+    public void setGraphicsContext(GraphicsContext gc) {
+        this.graphicsContext = gc;
     }
-
-    public AnimationTimer getAnimationTimer() {
-        return animationTimer;
-    }
-
-    public void setAnimationTimer(AnimationTimer animationTimer) {
-        this.animationTimer = animationTimer;
-    }
-
-
 }

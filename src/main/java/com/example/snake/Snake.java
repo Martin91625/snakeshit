@@ -6,17 +6,10 @@ public class Snake {
     
     // ArrayList<>
     // int length = 5;
-    Color color = Color.GREEN;
+    private Color color = Color.GREEN;
     private String direction = "RIGHT";
     private String nextDirection = "RIGHT";
-    int[] pos = {0, 0};
-
-    public Snake() {}
-
-    public Snake(String direction, int[] pos) {
-        this.direction = direction;
-        this.pos = pos;
-    }
+    private final int[] position = {0, 0};
 
     public void applyNextDirection() {
         if (
@@ -30,7 +23,6 @@ public class Snake {
 
         direction = nextDirection;
     }
-
 
     public Color getColor() {
         return color;
@@ -56,12 +48,12 @@ public class Snake {
         this.nextDirection = nextDirection;
     }
 
-    public int[] getPos() {
-        return pos;
+    public int[] getPosition() {
+        return position;
     }
 
-    public void setPos(int[] pos) {
-        this.pos[0] = pos[0];
-        this.pos[1] = pos[1];
+    public void setPosition(int[] pos) {
+        this.position[0] = pos[0];
+        this.position[1] = pos[1];
     }
 }
