@@ -2,6 +2,8 @@ package com.example;
 
 import java.io.IOException;
 
+import com.example.map.Map;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,9 +15,12 @@ public class App extends Application {
     private static Scene scene;
     public static Scene _scene;
 
+    private static final int SQUARE_SIZE = Map.getSquareSize();
+    private static final int MAP_WIDTH = Map.getWidth() * SQUARE_SIZE;
+    private static final int MAP_HEIGHT = Map.getHeight() * SQUARE_SIZE;
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("mainMenu"), 600, 600);
+        scene = new Scene(loadFXML("mainMenu"), MAP_WIDTH , MAP_HEIGHT);
         stage.setScene(scene);
         stage.show();
         _scene = scene;

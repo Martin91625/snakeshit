@@ -9,23 +9,25 @@ import javafx.scene.input.KeyCode;
 
 public class SnakeControl {
     
-    Map map = new Map();
-    int squareSize = map.getSquareSize();
-    int mapWidth = map.getWidth() * squareSize;
-    int mapHeight = map.getHeight() * squareSize;
-    int gameSpeed = map.getGameSpeed();
-    Snake snake = new Snake();
+    int squareSize = Map.getSquareSize();
+    int mapWidth = Map.getWidth() * squareSize;
+    int mapHeight = Map.getHeight() * squareSize;
+    private final Snake snake;
 
-    public double[] moveSnake(double dt) {
-        double[] pos = {0, 0};
+    public SnakeControl(Snake snake) {
+        this.snake = snake;
+    }
+
+    public int[] moveSnake() {
+        int[] pos = {0, 0};
         pos[0] = snake.getPos()[0];
         pos[1] = snake.getPos()[1];
         String dir = snake.getDirection();
         switch (dir) {
-            case "RIGHT" -> pos[0] += gameSpeed * dt;
-            case "LEFT" -> pos[0] -= gameSpeed * dt;
-            case "UP" -> pos[1] -= gameSpeed * dt;
-            case "DOWN" -> pos[1] += gameSpeed * dt;
+            case "RIGHT" -> pos[0] += squareSize;
+            case "LEFT" -> pos[0] -= squareSize;
+            case "UP" -> pos[1] -= squareSize;
+            case "DOWN" -> pos[1] += squareSize;
             default -> throw new InputMismatchException();
         }
         if (pos[0] > mapWidth - squareSize) {
@@ -46,16 +48,16 @@ public class SnakeControl {
 
     public void initChangeDirListener(Scene gameRoot) {
         gameRoot.setOnKeyPressed(e -> {
-            String current = snake.getDirection();
+            String current = snake.getNextDirection();
             KeyCode code = e.getCode();
             if (code == KeyCode.W && !current.equals("DOWN"))
-                snake.setDirection("UP");
+                snake.setNextDirection("UP");
             else if (code == KeyCode.S && !current.equals("UP"))
-                snake.setDirection("DOWN");
+                snake.setNextDirection("DOWN");
             else if (code == KeyCode.A && !current.equals("RIGHT"))
-                snake.setDirection("LEFT");
+                snake.setNextDirection("LEFT");
             else if (code == KeyCode.D && !current.equals("LEFT"))
-                snake.setDirection("RIGHT");
+                snake.setNextDirection("RIGHT");
         });
     }
 }

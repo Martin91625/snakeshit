@@ -11,11 +11,13 @@ import javafx.scene.paint.Color;
 
 public class MapRenderer extends Map{
 
-    Snake snake = new Snake();
-    SnakeControl snakeControl = new SnakeControl();
+    final Snake snake = new Snake();
+    SnakeControl snakeControl = new SnakeControl(snake);
     GraphicsContext gc;
     AnimationTimer animationTimer;
     double deltaTime;
+    private double accumulator = 0;
+    private final double timeDiff = 0.5;
 
     public MapRenderer(Canvas canvas) {
         super(canvas);
@@ -32,7 +34,8 @@ public class MapRenderer extends Map{
 
     private void update() {
         //System.out.println("updating");
-        double[] pos = snakeControl.moveSnake(deltaTime);     
+        snake.applyNextDirection();
+        int[] pos = snakeControl.moveSnake();     
         snake.setPos(pos);        
     }
 
@@ -55,8 +58,14 @@ public class MapRenderer extends Map{
                 deltaTime = (now - lastTime) / 1_000_000_000.0;
                 lastTime = now;
 
-                update();
+                accumulator += deltaTime;
+
+                while(accumulator >= timeDiff) {
+                    update();
+                    accumulator -= timeDiff;
+                }
                 render(gc);
+                
             }
         };
     }
