@@ -28,6 +28,11 @@ public class MapRenderer extends Map{
         //System.out.println("rendering");
         clearScreen();
 
+        if(snakeFood.isEaten(snake.getPosition())) {
+            snakeFood.setRandomFoodPos(width, height, squareSize);
+            snakeFood.setCurrentColor(snakeFood.randomFoodColor());
+        }
+
         graphicsContext.setFill(snake.getColor());
         graphicsContext.fillRect(snake.getPosition()[0], snake.getPosition()[1], squareSize, squareSize);
 
@@ -40,11 +45,7 @@ public class MapRenderer extends Map{
         snake.applyNextDirection();
         int[] pos = snakeControl.moveSnake(width * squareSize, height * squareSize, squareSize);     
         snake.setPosition(pos);
-
-        if(snakeFood.isEaten()) {
-            snakeFood.setRandomFoodPos(width, height, squareSize);
-            snakeFood.setCurrentColor(snakeFood.randomFoodColor());
-        }  
+  
     }
 
     private void clearScreen() {

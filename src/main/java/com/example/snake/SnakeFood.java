@@ -33,8 +33,9 @@ public class SnakeFood extends Snake{
         setFoodPos(newFoodPos);
     }
 
-    public boolean isEaten(){
-        return foodPos == getPosition();
+    public boolean isEaten(int[] position){
+        return foodPos[0] == position[0] && foodPos[1] == position[1]; 
+          
     }
 
     public Color randomFoodColor() {
