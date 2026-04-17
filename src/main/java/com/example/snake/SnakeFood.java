@@ -1,25 +1,51 @@
 package com.example.snake;
 
-public class SnakeFood {
+import java.util.Random;
+
+import javafx.scene.paint.Color;
+
+public class SnakeFood extends Snake{
     
+    private final Random random = new Random();
+
     private int[] foodPos;
 
-    public SnakeFood(int posX, int posY) {
-        this.foodPos[0] = posX;
-        this.foodPos[1] = posY;
+    private final Color[] foodColors = {Color.PURPLE, Color.LIME, Color.RED, Color.BLUE, Color.YELLOW};
+    private Color currentColor = Color.YELLOW;
+
+    public SnakeFood(int width, int height, int squareSize) {
+        setRandomFoodPos(width, height, squareSize);
     }
 
-    public int[] getFoodPos() {
+    public final int[] getFoodPos() {
         return foodPos;
     }
 
-    public void setFoodPos(int[] foodPos) {
+    public final void setFoodPos(int[] foodPos) {
         this.foodPos = foodPos;
     }
 
-    public void setRandomPos() {
-        this.foodPos[0] = (int)(Math.random());
-        this.foodPos[1] = (int)(Math.random());
+    public final void setRandomFoodPos(int width, int height, int squareSize) {
+        int foodPosX = random.nextInt(width) * squareSize;
+        int foodPosY = random.nextInt(height) * squareSize;
+        
+        int[] newFoodPos = {foodPosX, foodPosY};
+        setFoodPos(newFoodPos);
     }
-    
+
+    public boolean isEaten(){
+        return foodPos == getPosition();
+    }
+
+    public Color randomFoodColor() {
+        return foodColors[random.nextInt(foodColors.length)];
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+
+    public void setCurrentColor(Color currentColor) {
+        this.currentColor = currentColor;
+    }
 }

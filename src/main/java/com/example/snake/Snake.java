@@ -4,8 +4,7 @@ import javafx.scene.paint.Color;
 
 public class Snake {
     
-    // ArrayList<>
-    // int length = 5;
+    private int length = 2;
     private Color color = Color.GREEN;
     private String direction = "RIGHT";
     private String nextDirection = "RIGHT";
@@ -20,7 +19,6 @@ public class Snake {
         ) {
             return;
         }
-
         direction = nextDirection;
     }
 
@@ -55,5 +53,13 @@ public class Snake {
     public void setPosition(int[] pos) {
         this.position[0] = pos[0];
         this.position[1] = pos[1];
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 }

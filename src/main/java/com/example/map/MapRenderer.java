@@ -2,15 +2,16 @@ package com.example.map;
 
 import com.example.snake.Snake;
 import com.example.snake.SnakeControl;
+import com.example.snake.SnakeFood;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class MapRenderer extends Map{
 
     final Snake snake = new Snake();
+    final SnakeFood snakeFood = new SnakeFood(width, height, squareSize);
     SnakeControl snakeControl = new SnakeControl(snake);
     
     AnimationTimer animationTimer;
@@ -23,27 +24,36 @@ public class MapRenderer extends Map{
         this.startGameLoop();
     }
 
-    private void render(GraphicsContext gc) {
+    private void render() {
         //System.out.println("rendering");
         clearScreen();
-        gc.setFill(snake.getColor());
-        gc.fillRect(snake.getPosition()[0], snake.getPosition()[1], squareSize, squareSize);
+
+        graphicsContext.setFill(snake.getColor());
+        graphicsContext.fillRect(snake.getPosition()[0], snake.getPosition()[1], squareSize, squareSize);
+
+        graphicsContext.setFill(snakeFood.getCurrentColor());
+        graphicsContext.fillRect(snakeFood.getFoodPos()[0], snakeFood.getFoodPos()[1], squareSize, squareSize);
     }
 
     private void update() {
         //System.out.println("updating");
         snake.applyNextDirection();
         int[] pos = snakeControl.moveSnake(width * squareSize, height * squareSize, squareSize);     
-        snake.setPosition(pos);        
+        snake.setPosition(pos);
+
+        if(snakeFood.isEaten()) {
+            snakeFood.setRandomFoodPos(width, height, squareSize);
+            snakeFood.setCurrentColor(snakeFood.randomFoodColor());
+        }  
     }
 
     private void clearScreen() {
         //System.out.println("clearing screen");
         graphicsContext.setFill(Color.BLACK);
-        graphicsContext.fillRect(0, 0,height*squareSize, width*squareSize);
+        graphicsContext.fillRect(0, 0,height * squareSize, width * squareSize);
     }
 
-    private void initGameLoop(GraphicsContext gc) {
+    private void initGameLoop() {
         animationTimer = new AnimationTimer() {
             long lastTime = 0;
 
@@ -62,13 +72,12 @@ public class MapRenderer extends Map{
                     update();
                     accumulator -= timeDiff;
                 }
-                render(gc);
-                
+                render();
             }
         };
     }
     public final void startGameLoop() {
-        initGameLoop(graphicsContext);
+        initGameLoop();
         animationTimer.start();
     }
     public final void stopGameLoop() {
