@@ -11,9 +11,10 @@ import javafx.scene.paint.Color;
 public class MapRenderer extends Map{
 
     final Snake snake = new Snake();
+    final SnakeControl snakeControl = new SnakeControl(snake);
+    //final SnakeBody snakeBody = new SnakeBody(snake);
     final SnakeFood snakeFood = new SnakeFood(width, height, squareSize);
-    SnakeControl snakeControl = new SnakeControl(snake);
-    
+
     AnimationTimer animationTimer;
     double deltaTime;
     private double accumulator = 0;
@@ -84,6 +85,4 @@ public class MapRenderer extends Map{
     public final void stopGameLoop() {
         animationTimer.stop();
     }
-
-    
 }

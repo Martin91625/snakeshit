@@ -2,21 +2,28 @@ package com.example.snake;
 
 public class SnakeSegment extends Snake {
 
-    public SnakeSegment() {
-        if (getLength() > 2) {
-            initSnakeBody();            
-        }
-        initSnakeTail();
+    private String type = "TAIL";
+    private int[] segmentPosition = {0, 0};
+    private String segmentDirection = "RIGHT";
 
+    public String getType() {
+        return type;
     }
-
-    private void initSnakeBody(){
-
+    public void setType(String type) {
+        this.type = type;
     }
-
-    private void initSnakeTail(){
-        if (getLength() < 2) {
-            
-        }
+    public int[] getSegmentPosition() {
+        return segmentPosition;
     }
+    public void setSegmentPosition(int[] segmentPosition) {
+        this.segmentPosition = segmentPosition;
+    }
+    public String getSegmentDirection() {
+        return segmentDirection;
+    }
+    public void setSegmentDirection(String segmentDirection) {
+        this.segmentDirection = segmentDirection;
+    }
+    
+
 }
